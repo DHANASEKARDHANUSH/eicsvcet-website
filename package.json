@@ -1,0 +1,20 @@
+{
+  "name": "eic-club-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Production-style website for a college Entrepreneurship & Innovation Club.",
+  "type": "module",
+  "engines": {
+    "node": ">=24.15.0"
+  },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env server.js",
+    "start:dev": "node --env-file-if-exists=.env --watch server.js",
+    "migrate": "node --env-file-if-exists=.env scripts/migrate-sqlite.mjs",
+    "export": "node --env-file-if-exists=.env scripts/export-members.mjs",
+    "check": "node --env-file-if-exists=.env scripts/smoke-test.mjs"
+  },
+  "dependencies": {
+    "pg": "^8.23.0"
+  }
+}

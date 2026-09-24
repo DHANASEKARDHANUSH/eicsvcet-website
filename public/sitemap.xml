@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://eic.example.edu/</loc></url>
+  <url><loc>https://eic.example.edu/about/</loc></url>
+  <url><loc>https://eic.example.edu/initiatives/</loc></url>
+  <url><loc>https://eic.example.edu/membership/</loc></url>
+  <url><loc>https://eic.example.edu/contact/</loc></url>
+  <url><loc>https://eic.example.edu/privacy/</loc></url>
+</urlset>

@@ -1,0 +1,9 @@
+{
+  "name": "Entrepreneurship & Innovation Club",
+  "short_name": "EIC",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f0e2",
+  "theme_color": "#171813",
+  "icons": [{"src":"/assets/favicon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}

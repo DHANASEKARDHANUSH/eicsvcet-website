@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Join EIC | Student Membership Registration</title>
+  <meta name="description" content="Apply to join the Entrepreneurship & Innovation Club as a student member. Submit your details and areas of interest through the secure registration form.">
+  <link rel="canonical" href="https://eic.example.edu/membership/">
+  <meta name="theme-color" content="#f7f0e2"><link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css"><script defer src="/app.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header"><div class="nav-wrap"><a class="brand" href="/" aria-label="EIC home"><img src="/assets/logo.svg" alt="Entrepreneurship &amp; Innovation Club"></a><button class="menu-toggle" type="button" aria-controls="primary-navigation" aria-expanded="false" aria-label="Open navigation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><nav id="primary-navigation" class="site-nav" data-open="false" aria-label="Primary navigation"><a data-route="/" href="/">Home</a><a data-route="/about" href="/about/">About</a><a data-route="/initiatives" href="/initiatives/">Initiatives</a><a data-route="/contact" href="/contact/">Contact</a><a class="nav-cta" data-route="/membership" href="/membership/">Join EIC</a></nav></div></header>
+<main id="main" class="section">
+  <div class="container form-shell">
+    <aside class="form-intro"><span class="eyebrow" >Membership</span><h1>Join the room.</h1><p>Tell us who you are, what you are curious about, and what you want to work on. You do not need an existing startup.</p><p>Applications are stored securely on the club server and reviewed by the club team.</p></aside>
+    <form id="membership-form" class="form" novalidate>
+      <div class="field-grid">
+        <div class="field"><label for="name">Full name *</label><input id="name" name="name" autocomplete="name" minlength="2" maxlength="80" required></div>
+        <div class="field"><label for="email">College email *</label><input id="email" name="email" type="email" autocomplete="email" maxlength="160" required></div>
+        <div class="field"><label for="phone">Phone *</label><input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="16" required></div>
+        <div class="field"><label for="registerNumber">Register number *</label><input id="registerNumber" name="registerNumber" maxlength="30" required></div>
+        <div class="field"><label for="department">Department *</label><input id="department" name="department" maxlength="80" required></div>
+        <div class="field"><label for="year">Year *</label><select id="year" name="year" required><option value="">Select</option><option>1st year</option><option>2nd year</option><option>3rd year</option><option>4th year</option><option>Other</option></select></div>
+        <fieldset class="field field-full membership-interests"><legend>What are you interested in? *</legend><div class="pill-list"><label class="pill"><input type="checkbox" name="interests" value="Startups"> Startups</label><label class="pill"><input type="checkbox" name="interests" value="Product"> Product</label><label class="pill"><input type="checkbox" name="interests" value="Technology"> Technology</label><label class="pill"><input type="checkbox" name="interests" value="Research"> Research</label><label class="pill"><input type="checkbox" name="interests" value="Design"> Design</label><label class="pill"><input type="checkbox" name="interests" value="Finance"> Finance</label></div><p class="help">Choose up to 4.</p></fieldset>
+        <div class="field field-full"><label for="motivation">What would you like to build, learn, or explore? *</label><textarea id="motivation" name="motivation" minlength="20" maxlength="1200" required></textarea><p class="help">20–1200 characters.</p></div>
+        <div class="honeypot" aria-hidden="true"><label for="website">Website</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div>
+      </div>
+      <div class="form-footer"><label class="check-row"><input type="checkbox" required> <span>I agree that EIC can use these details to process my membership application.</span></label><button class="button button-primary" type="submit">Submit application</button></div>
+      <p id="form-status" class="status" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</main>
+<footer class="site-footer"><div class="container footer-grid"><div><strong>Entrepreneurship &amp; Innovation Club</strong><p class="tiny">Your details go to the club application database—not into a third-party analytics bucket.</p></div><div class="footer-links"><strong>Explore</strong><a href="/">Home</a><a href="/about/">About</a><a href="/initiatives/">Initiatives</a></div><div class="footer-links"><strong>Connect</strong><a href="/contact/">Contact</a><a href="/privacy/">Privacy</a><a href="mailto:eic@yourcollege.edu">Email the club</a></div></div><div class="container"><p class="tiny">© <span data-year></span> EIC.<a href="mailto:eicsvcet@gmail.com">eicsvcet@gmail.com</a></p></div></footer>
+</body>
+</html>
