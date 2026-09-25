@@ -36,7 +36,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .site-header { position: sticky; top: 0; z-index: 40; background: rgba(247,240,226,.94); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
 .nav-wrap { max-width: var(--max); margin: 0 auto; padding: 15px 22px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
 .brand { display: inline-flex; align-items: center; text-decoration: none; }
-.brand img { width: 205px; height: auto; }
+.brand img { width: 320px; height: auto; }
 .menu-toggle { display: none; border: 1px solid var(--line); background: transparent; border-radius: 12px; padding: 9px 11px; cursor: pointer; }
 .menu-toggle svg { width: 21px; height: 21px; display: block; }
 .site-nav { display: flex; align-items: center; gap: 24px; }
