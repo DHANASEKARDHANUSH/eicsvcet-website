@@ -136,7 +136,7 @@ async function handleMembership(req, res) {
   const allowedInterests = new Set(['Startups', 'Product', 'Technology', 'Research', 'Design', 'Communication']);
   const interests = Array.isArray(body.interests) ? [...new Set(body.interests.map((x) => cleanText(x, 40)))] : [];
 
-  const valid = name.length >= 2 && validEmail(email) && validPhone(phone) && registerNumber.length >= 2 && allowedDepartments.has(department) && allowedYears.has(year) && interests.length >= 1 && interests.length <= 4 && interests.every((x) => allowedInterests.has(x)) && motivation.length >= 20;
+  const valid = name.length >= 2 && validEmail(email) && validPhone(phone) && registerNumber.length >= 2 && allowedDepartments.has(department) && allowedYears.has(year) && interests.length >= 1 && interests.length <= 4 && interests.every((x) => allowedInterests.has(x)) && motivation.length >= 0;
   if (!valid) return json(res, 400, { message: 'Please complete the required fields with valid information.' });
 
   const reference = makeReference();
