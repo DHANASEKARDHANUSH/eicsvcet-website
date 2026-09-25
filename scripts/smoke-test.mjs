@@ -1,3 +1,4 @@
+import crypto from 'node:crypto';
 import { spawn } from 'node:child_process';
 const proc = spawn(process.execPath, ['server.js'], { env: { ...process.env, NODE_ENV: 'test', PORT: '3187' }, stdio: ['ignore','pipe','pipe'] });
 let output = '';
@@ -23,7 +24,7 @@ try {
   if (!valid) throw new Error('HTTP smoke test failed');
   const registration = await fetch('http://127.0.0.1:3187/api/membership', {
     method: 'POST', headers: { 'content-type': 'application/json', origin: 'http://127.0.0.1:3187' },
-    body: JSON.stringify({ name:'Test Student', email:`smoke-${Date.now()}@example.edu`, phone:'+91 9876543210', registerNumber:'TEST001', department:'AIDS', year:'3rd year', interests:['Technology','Research'], motivation:'I want to build useful prototypes with the club and learn how to validate them.', website:'' })
+    body: JSON.stringify({ name:'Test Student', email:`smoke-${crypto.randomUUID()}@example.edu`, phone:'+91 9876543210', registerNumber:'TEST001', department:'AIDS', year:'3rd year', interests:['Technology','Research'], motivation:'I want to build useful prototypes with the club and learn how to validate them.', website:'' })
   });
   console.log(`membership POST: ${registration.status}`);
   if (registration.status !== 201) throw new Error(`Registration test failed: ${await registration.text()}`);
