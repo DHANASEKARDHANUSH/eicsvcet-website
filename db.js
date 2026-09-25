@@ -23,7 +23,7 @@ export async function initDatabase() {
       reference TEXT NOT NULL UNIQUE,
       name TEXT NOT NULL,
       email TEXT NOT NULL UNIQUE,
-      phone TEXT NOT NULL,
+      phone TEXT NOT NULL UNIQUE,
       register_number TEXT NOT NULL,
       department TEXT NOT NULL,
       year TEXT NOT NULL,
