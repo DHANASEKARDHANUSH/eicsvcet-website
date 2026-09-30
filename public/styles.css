@@ -108,6 +108,15 @@ textarea { min-height: 120px; resize: vertical; }
 .contact-card a { text-decoration: none; color: var(--maroon); font-weight: 850; }
 .contact-card a:hover { text-decoration: underline; }
 
+.managed-public-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.managed-public-card { padding: 0; overflow: hidden; }
+.managed-public-media { aspect-ratio: 16 / 9; overflow: hidden; background: var(--sand); }
+.managed-public-media img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.managed-public-body { padding: 24px; }
+.managed-public-kicker { margin-bottom: 10px; color: var(--green); font-size: .76rem; font-weight: 900; text-transform: uppercase; }
+.managed-public-meta { color: var(--muted); font-weight: 750; }
+.managed-public-body > :last-child { margin-bottom: 0; }
+
 .site-footer { margin-top: 70px; border-top: 1px solid var(--line); padding: 35px 0 50px; }
 .footer-grid { display: grid; grid-template-columns: 1.3fr .7fr .7fr; gap: 28px; }
 .footer-links { display: grid; gap: 9px; }
@@ -129,6 +138,7 @@ textarea { min-height: 120px; resize: vertical; }
   .hero-grid, .split, .form-shell { grid-template-columns: 1fr; }
   .form-intro { position: static; }
   .grid-3 { grid-template-columns: 1fr; }
+  .managed-public-grid { grid-template-columns: 1fr; }
   .hero-art { order: -1; }
   h1 { max-width: 12ch; }
 }

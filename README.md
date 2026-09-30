@@ -32,6 +32,16 @@ Run the built-in checks:
 npm run check
 ```
 
+## Admin accounts
+
+Run `node scripts/create-admin-hash.mjs` to generate a username and scrypt password-hash entry. Store the account entries in `ADMIN_USERS` in the local `.env` file as a JSON array:
+
+```env
+ADMIN_USERS='[{"username":"admin-one","passwordHash":"<generated-hash>"},{"username":"admin-two","passwordHash":"<generated-hash>"}]'
+```
+
+Add one generated object per administrator, then restart the server. The older `ADMIN_USERNAME` and `ADMIN_PASSWORD_HASH` settings remain supported for a single account when `ADMIN_USERS` is not set. Keep `.env` private and out of source control.
+
 Export membership applications for the club team:
 
 ```bash

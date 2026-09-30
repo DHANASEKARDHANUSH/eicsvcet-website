@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import http from 'node:http';
 import { brotliCompressSync, gzipSync } from 'node:zlib';
 import { closeDatabase, initDatabase, insertApplication } from './db.js';
+import { createAdminController } from './admin-controller.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -13,6 +14,7 @@ const PORT = Number(process.env.PORT || 3000);
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const SITE_URL = (process.env.SITE_URL || 'https://eic.example.edu').replace(/\/$/, '');
 const TRUST_PROXY = process.env.TRUST_PROXY === '1';
+const adminController = createAdminController();
 
 const MIME = new Map([
   ['.html', 'text/html; charset=utf-8'],
@@ -194,7 +196,7 @@ const server = http.createServer(async (req, res) => {
 
   if (req.method === 'GET' && pathname === '/api/health') return json(res, 200, { ok: true, service: 'eic-club' }, { 'Cache-Control': 'no-store' });
   if (req.method === 'POST' && pathname === '/api/membership') return handleMembership(req, res);
-  if (pathname.startsWith('/api/')) return json(res, 404, { message: 'Not found.' });
+  if (pathname.startsWith('/api/')) return adminController.handle(req, res, requestUrl);
   if (!['GET', 'HEAD'].includes(req.method)) return json(res, 405, { message: 'Method not allowed.' }, { Allow: 'GET, HEAD, POST' });
 
   const served = serveStatic(req, res, pathname);
@@ -213,6 +215,7 @@ if (NODE_ENV === 'production') {
 }
 
 await initDatabase();
+await adminController.init();
 
 server.listen(PORT, () => {
   console.log(`EIC site running at http://localhost:${PORT}`);

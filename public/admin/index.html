@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EIC Administration | Manage Events, Programs &amp; Achievements</title>
+  <meta name="description" content="Private administration area for managing EIC events, programs, student achievements, and membership exports.">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="theme-color" content="#f7f0e2">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body class="admin-page">
+  <main class="admin-shell">
+    <section id="login-view" class="admin-login panel" aria-labelledby="login-title">
+      <div class="eyebrow">EIC Administration</div>
+      <h1 id="login-title">Welcome back.</h1>
+      <p class="admin-muted">Sign in to manage public events, programs, student achievements, and membership exports.</p>
+
+      <form id="login-form" class="admin-form" novalidate>
+        <div class="admin-field">
+          <label for="admin-username">Username</label>
+          <input id="admin-username" name="username" type="text" autocomplete="username" maxlength="100" required>
+        </div>
+
+        <div class="admin-field">
+          <label for="admin-password">Password</label>
+          <input id="admin-password" name="password" type="password" autocomplete="current-password" maxlength="200" required>
+        </div>
+
+        <button class="admin-button admin-button-primary" type="submit">Sign in</button>
+        <p id="login-status" class="admin-status" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section id="dashboard-view" hidden aria-labelledby="dashboard-title">
+      <header class="admin-topbar">
+        <div>
+          <div class="eyebrow">EIC Administration</div>
+          <h1 id="dashboard-title">Content desk.</h1>
+          <p class="admin-muted">Everything added here can appear on the public initiatives page.</p>
+        </div>
+        <div class="admin-topbar-actions">
+          <a class="admin-button admin-button-secondary" href="/" target="_blank" rel="noopener">View site</a>
+          <button id="logout-button" class="admin-button admin-button-secondary" type="button">Log out</button>
+        </div>
+      </header>
+
+      <section class="admin-stats" aria-label="Content summary">
+        <div class="admin-stat"><span>Events</span><strong id="stat-events">0</strong></div>
+        <div class="admin-stat"><span>Programs</span><strong id="stat-programs">0</strong></div>
+        <div class="admin-stat"><span>Achievements</span><strong id="stat-achievements">0</strong></div>
+        <div class="admin-stat"><span>Published</span><strong id="stat-published">0</strong></div>
+      </section>
+
+      <section class="admin-grid">
+        <article class="panel admin-editor">
+          <div class="admin-section-head">
+            <div>
+              <div class="eyebrow">Create or edit</div>
+              <h2 id="editor-title">Add something new.</h2>
+            </div>
+            <button id="cancel-edit" class="admin-text-button" type="button" hidden>Cancel edit</button>
+          </div>
+
+          <form id="content-form" class="admin-form" novalidate>
+            <input id="content-id" type="hidden">
+
+            <div class="admin-field-grid">
+              <div class="admin-field">
+                <label for="content-kind">Type</label>
+                <select id="content-kind" required>
+                  <option value="event">Event</option>
+                  <option value="program">Program</option>
+                  <option value="achievement">Achievement</option>
+                </select>
+              </div>
+
+              <div class="admin-field">
+                <label for="content-title">Title</label>
+                <input id="content-title" type="text" maxlength="120" required>
+              </div>
+            </div>
+
+            <div class="admin-field">
+              <label for="content-description">Description</label>
+              <textarea id="content-description" maxlength="3000" required></textarea>
+              <p id="content-description-help" class="admin-help"></p>
+            </div>
+
+            <div class="admin-field-grid">
+              <div class="admin-field">
+                <label for="content-date"><span id="content-date-label">Date &amp; time</span> <span class="admin-optional">(optional)</span></label>
+                <input id="content-date" type="datetime-local">
+              </div>
+
+              <div class="admin-field">
+                <label for="content-location">Location <span class="admin-optional">(optional)</span></label>
+                <input id="content-location" type="text" maxlength="180">
+              </div>
+            </div>
+
+            <div class="admin-field">
+              <label for="content-image">Picture <span id="image-required-label">(required)</span></label>
+              <input id="content-image" type="file" accept="image/jpeg,image/png,image/webp">
+              <p class="admin-help">Upload a clear image. The browser compresses it before sending; the server rejects anything over 900 KB.</p>
+              <div id="image-preview-wrap" class="image-preview-wrap" hidden>
+                <img id="image-preview" src="" alt="Selected image preview">
+              </div>
+            </div>
+
+            <div class="admin-field">
+              <label for="content-alt">Image alt text</label>
+              <input id="content-alt" type="text" maxlength="220" placeholder="Students presenting prototypes at the EIC build sprint">
+              <p class="admin-help">Describe what the image shows.</p>
+            </div>
+
+            <label class="admin-check">
+              <input id="content-published" type="checkbox" checked>
+              <span>Visible on the public website</span>
+            </label>
+
+            <div class="admin-form-footer">
+              <button id="save-content" class="admin-button admin-button-primary" type="submit">Publish event</button>
+              <p id="content-status" class="admin-status" role="status" aria-live="polite"></p>
+            </div>
+          </form>
+        </article>
+
+        <aside class="panel admin-tools">
+          <div class="eyebrow">Membership</div>
+          <h2>Take the records with you.</h2>
+          <p class="admin-muted">Download the membership table as a CSV. The export sanitizes spreadsheet-dangerous values.</p>
+          <a id="export-members" class="admin-button admin-button-dark" href="/api/admin/export-members">Export membership CSV</a>
+          <p class="admin-help"></p>
+        </aside>
+      </section>
+
+      <section class="admin-list-section" aria-labelledby="items-heading">
+        <div class="admin-section-head">
+          <div>
+            <div class="eyebrow">Managed content</div>
+            <h2 id="items-heading">What is live.</h2>
+          </div>
+          <div class="admin-filter" role="group" aria-label="Filter content">
+            <button class="filter-button active" type="button" data-filter="all">All</button>
+            <button class="filter-button" type="button" data-filter="event">Events</button>
+            <button class="filter-button" type="button" data-filter="program">Programs</button>
+            <button class="filter-button" type="button" data-filter="achievement">Achievements</button>
+          </div>
+        </div>
+
+        <p id="list-status" class="admin-status" role="status" aria-live="polite"></p>
+        <div id="content-list" class="managed-admin-grid"></div>
+      </section>
+    </section>
+  </main>
+
+  <script src="/admin/admin.js" defer></script>
+</body>
+</html>
