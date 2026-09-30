@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 Disallow: /api/
-Sitemap: https://eic.example.edu/sitemap.xml
+Sitemap: https://eicsvcet.onrender.com/sitemap.xml
