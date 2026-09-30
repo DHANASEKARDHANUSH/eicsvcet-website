@@ -6,6 +6,8 @@
   const loginView = $('#login-view');
   const dashboardView = $('#dashboard-view');
   const loginForm = $('#login-form');
+  const passwordInput = $('#admin-password');
+  const passwordToggle = $('#password-toggle');
   const loginStatus = $('#login-status');
   const logoutButton = $('#logout-button');
   const contentForm = $('#content-form');
@@ -503,6 +505,13 @@
   cancelEditButton.addEventListener('click', resetEditor);
   contentForm.addEventListener('submit', submitContent);
   loginForm.addEventListener('submit', login);
+  passwordToggle.addEventListener('click', () => {
+    const revealPassword = passwordInput.type === 'password';
+    passwordInput.type = revealPassword ? 'text' : 'password';
+    passwordToggle.textContent = revealPassword ? 'Hide' : 'Show';
+    passwordToggle.setAttribute('aria-label', `${revealPassword ? 'Hide' : 'Show'} password`);
+    passwordToggle.setAttribute('aria-pressed', String(revealPassword));
+  });
 
   logoutButton.addEventListener('click', async () => {
     try {

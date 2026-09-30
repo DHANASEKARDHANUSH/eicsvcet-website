@@ -32,6 +32,12 @@
 .admin-page textarea { min-height: 150px; resize: vertical; }
 .admin-page input:focus, .admin-page select:focus, .admin-page textarea:focus { border-color: var(--admin-green); outline: 3px solid rgba(36,76,66,.13); }
 .admin-page input[type="file"] { padding: 9px; }
+.password-control { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; border: 1px solid rgba(23,24,19,.24); border-radius: 12px; background: #fffaf0; }
+.admin-page .password-control input { min-width: 0; border: 0; background: transparent; }
+.admin-page .password-control input:focus { border-color: transparent; outline: none; }
+.password-control:focus-within { border-color: var(--admin-green); outline: 3px solid rgba(36,76,66,.13); }
+.password-toggle { align-self: stretch; border: 0; border-left: 1px solid var(--admin-line); border-radius: 0 11px 11px 0; padding: 0 13px; background: transparent; color: var(--admin-maroon); font-weight: 850; cursor: pointer; }
+.password-toggle:hover { background: rgba(109,38,55,.06); }
 .admin-button { display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 11px 16px; border: 1px solid var(--admin-ink); border-radius: 999px; text-decoration: none; font-weight: 850; cursor: pointer; }
 .admin-button-primary { background: var(--admin-maroon); color: var(--admin-paper); border-color: var(--admin-maroon); }
 .admin-button-dark { background: var(--admin-ink); color: var(--admin-paper); }

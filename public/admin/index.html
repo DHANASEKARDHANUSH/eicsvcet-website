@@ -9,7 +9,7 @@
   <meta name="theme-color" content="#f7f0e2">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/styles.css">
-  <link rel="stylesheet" href="/admin/admin.css">
+  <link rel="stylesheet" href="/admin/admin.css?v=2">
 </head>
 <body class="admin-page">
   <main class="admin-shell">
@@ -26,7 +26,10 @@
 
         <div class="admin-field">
           <label for="admin-password">Password</label>
-          <input id="admin-password" name="password" type="password" autocomplete="current-password" maxlength="200" required>
+          <div class="password-control">
+            <input id="admin-password" name="password" type="password" autocomplete="current-password" maxlength="200" required>
+            <button id="password-toggle" class="password-toggle" type="button" aria-controls="admin-password" aria-pressed="false" aria-label="Show password">Show</button>
+          </div>
         </div>
 
         <button class="admin-button admin-button-primary" type="submit">Sign in</button>
@@ -158,6 +161,6 @@
     </section>
   </main>
 
-  <script src="/admin/admin.js" defer></script>
+  <script src="/admin/admin.js?v=2" defer></script>
 </body>
 </html>
