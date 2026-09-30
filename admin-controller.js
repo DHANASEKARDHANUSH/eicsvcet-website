@@ -19,6 +19,13 @@ import {
   listMembershipRows,
   getContentImageForAdmin
 } from './admin-db.js';
+import {
+  getVapidPublicKey,
+  initPushDatabase,
+  savePushSubscription,
+  removePushSubscription,
+  sendContentPush
+} from './notification-service.js';
 
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const PRODUCTION = NODE_ENV === 'production';
@@ -211,10 +218,43 @@ export function createAdminController() {
   return {
     async init() {
       await import('./admin-db.js').then(module => module.initAdminDatabase());
+      await initPushDatabase();
     },
 
     async handle(req, res, requestUrl) {
       const pathname = requestUrl.pathname;
+
+      if (req.method === 'GET' && pathname === '/api/notifications/public-key') {
+        const publicKey = getVapidPublicKey();
+        if (!publicKey) return json(res, 503, { message: 'Notifications are not configured yet.' });
+        return json(res, 200, { publicKey }, { 'Cache-Control': 'no-store' });
+      }
+
+      if (req.method === 'POST' && pathname === '/api/notifications/subscribe') {
+        if (!sameOrigin(req)) return json(res, 403, { message: 'Request validation failed.' });
+        try {
+          const body = JSON.parse(await readBody(req));
+          await savePushSubscription(body);
+          return json(res, 201, { ok: true });
+        } catch (error) {
+          return json(res, error?.code === 'PAYLOAD_TOO_LARGE' ? 413 : 400, {
+            message: error.message || 'Could not save notification settings.'
+          });
+        }
+      }
+
+      if (req.method === 'DELETE' && pathname === '/api/notifications/subscribe') {
+        if (!sameOrigin(req)) return json(res, 403, { message: 'Request validation failed.' });
+        try {
+          const body = JSON.parse(await readBody(req));
+          const endpoint = typeof body?.endpoint === 'string' ? body.endpoint.trim() : '';
+          if (!endpoint || endpoint.length > 4096) return json(res, 400, { message: 'Invalid push endpoint.' });
+          await removePushSubscription(endpoint);
+          return json(res, 200, { ok: true });
+        } catch (error) {
+          return json(res, 400, { message: error.message || 'Could not disable notifications.' });
+        }
+      }
 
       if (req.method === 'GET' && pathname === '/api/public/content') {
         const kind = requestUrl.searchParams.get('kind');
@@ -328,7 +368,16 @@ export function createAdminController() {
           const body = JSON.parse(await readBody(req));
           const item = parseContent(body);
           const created = await createContent(item);
-          return json(res, 201, { item: created });
+          let notification = null;
+          if (created.published && ['event', 'achievement'].includes(created.kind)) {
+            try {
+              notification = await sendContentPush(created);
+            } catch (notificationError) {
+              console.error('Content notification failed:', notificationError);
+              notification = { sent: 0, removed: 0, failed: 1, skipped: false };
+            }
+          }
+          return json(res, 201, { item: created, notification });
         } catch (error) {
           console.error('Content create failed:', error);
           return json(res, error?.code === 'PAYLOAD_TOO_LARGE' ? 413 : 400, { message: error.message || 'Could not create content.' });

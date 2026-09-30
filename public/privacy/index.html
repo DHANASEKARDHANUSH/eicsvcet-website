@@ -13,6 +13,7 @@
     <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="/styles.css" />
     <script defer src="/app.js"></script>
+    <script defer src="/notifications.js"></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -88,6 +89,16 @@
                 The sample implementation stores submissions in a PostgreSQL
                 database on the club server. It does not load third-party
                 analytics, advertising scripts, or external web fonts.
+              </p>
+            </article>
+            <article class="card">
+              <h2>Optional notifications</h2>
+              <p>
+                If you enable EIC alerts, the site stores your browser's push
+                subscription endpoint and encryption keys in the club database
+                so it can deliver event and achievement announcements. You can
+                turn alerts off from the same control; the subscription is then
+                removed.
               </p>
             </article>
             <article class="card">
