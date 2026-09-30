@@ -92,7 +92,8 @@
             <div class="admin-field-grid">
               <div class="admin-field">
                 <label for="content-date"><span id="content-date-label">Date &amp; time</span> <span class="admin-optional">(optional)</span></label>
-                <input id="content-date" type="datetime-local">
+                <input id="content-date" type="text" inputmode="numeric" maxlength="16" placeholder="DD/MM/YYYY HH:MM" aria-describedby="content-date-help" autocomplete="off">
+                <p id="content-date-help" class="admin-help">Enter day/month/year and 24-hour time, for example 07/10/2026 18:30.</p>
               </div>
 
               <div class="admin-field">

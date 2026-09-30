@@ -163,18 +163,49 @@
     saveButton.textContent = contentId.value ? 'Save changes' : `Publish ${kind}`;
   }
 
-  function toDateTimeLocal(value) {
+  function toDateTimeInput(value) {
     if (!value) return '';
     const date = new Date(value);
-    const local = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
-    return local.toISOString().slice(0, 16);
+    if (Number.isNaN(date.getTime())) return '';
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    const hour = String(date.getHours()).padStart(2, '0');
+    const minute = String(date.getMinutes()).padStart(2, '0');
+    return `${day}/${month}/${year} ${hour}:${minute}`;
+  }
+
+  function parseDateTimeInput(value) {
+    const text = value.trim();
+    if (!text) return null;
+
+    const match = /^(\d{2})\/(\d{2})\/(\d{4})\s+(\d{2}):(\d{2})$/.exec(text);
+    if (!match) throw new Error('Enter date and time as DD/MM/YYYY HH:MM (24-hour).');
+
+    const [, dayText, monthText, yearText, hourText, minuteText] = match;
+    const day = Number(dayText);
+    const month = Number(monthText);
+    const year = Number(yearText);
+    const hour = Number(hourText);
+    const minute = Number(minuteText);
+    const date = new Date(year, month - 1, day, hour, minute);
+
+    if (year < 1000 || date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day || date.getHours() !== hour || date.getMinutes() !== minute) {
+      throw new Error('Enter a valid date and time as DD/MM/YYYY HH:MM.');
+    }
+
+    return date.toISOString();
   }
 
   function formatDate(value) {
     if (!value) return '';
-    return new Intl.DateTimeFormat(undefined, {
-      dateStyle: 'medium',
-      timeStyle: 'short'
+    return new Intl.DateTimeFormat('en-GB', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hourCycle: 'h23'
     }).format(new Date(value));
   }
 
@@ -183,7 +214,7 @@
     contentKind.value = item.kind;
     contentTitle.value = item.title;
     contentDescription.value = item.description;
-    contentDate.value = toDateTimeLocal(item.eventDate);
+    contentDate.value = toDateTimeInput(item.eventDate);
     contentLocation.value = item.location || '';
     contentAlt.value = item.imageAlt || '';
     contentPublished.checked = item.published;
@@ -262,6 +293,7 @@
 
     try {
       const existingId = contentId.value.trim();
+      const eventDate = parseDateTimeInput(contentDate.value);
       const file = contentImage.files[0];
       let image = null;
 
@@ -276,7 +308,7 @@
         kind: contentKind.value,
         title: contentTitle.value.trim(),
         description: contentDescription.value.trim(),
-        eventDate: contentDate.value ? new Date(contentDate.value).toISOString() : null,
+        eventDate,
         location: contentLocation.value.trim(),
         published: contentPublished.checked,
         image
