@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
-const pages = ['public/index.html','public/about/index.html','public/initiatives/index.html','public/membership/index.html','public/contact/index.html','public/privacy/index.html','public/404.html'];
+const pages = ['public/index.html','public/about/index.html','public/initiatives/index.html','public/initiatives/achievements/index.html','public/membership/index.html','public/contact/index.html','public/privacy/index.html','public/404.html'];
 const sitemap = fs.readFileSync(path.join(root, 'public/sitemap.xml'), 'utf8');
 const sitemapUrls = [...sitemap.matchAll(/<loc>(https:\/\/[^<]+)<\/loc>/g)].map((match) => new URL(match[1]));
 if (sitemapUrls.length === 0) throw new Error('sitemap.xml: no HTTPS URLs found');

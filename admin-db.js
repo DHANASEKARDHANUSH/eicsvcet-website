@@ -66,22 +66,31 @@ function assertKind(kind) {
   if (!ALLOWED_KINDS.has(kind)) throw new Error('Invalid content type.');
 }
 
-export async function listPublicContent(kind) {
+export async function listPublicContent(kind, limit = null) {
   assertKind(kind);
 
+  const values = [kind];
+  const limitClause = Number.isInteger(limit) && limit > 0
+    ? (values.push(limit + 1), `LIMIT $${values.length}`)
+    : '';
+  const orderClause = kind === 'achievement'
+    ? 'created_at DESC, id DESC'
+    : `CASE WHEN event_date IS NULL THEN 1 ELSE 0 END,
+       event_date DESC NULLS LAST,
+       created_at DESC, id DESC`;
   const { rows } = await pool.query(`
     SELECT
       id, kind, title, description, event_date, location,
       image_mime, image_alt, created_at, updated_at
     FROM club_content_items
     WHERE kind = $1 AND published = TRUE
-    ORDER BY
-      CASE WHEN event_date IS NULL THEN 1 ELSE 0 END,
-      event_date DESC NULLS LAST,
-      created_at DESC
-  `, [kind]);
+    ORDER BY ${orderClause}
+    ${limitClause}
+  `, values);
 
-  return rows.map(row => ({
+  const hasMore = Number.isInteger(limit) && limit > 0 && rows.length > limit;
+  const items = hasMore ? rows.slice(0, limit) : rows;
+  return { items: items.map(row => ({
     id: row.id.toString(),
     kind: row.kind,
     title: row.title,
@@ -92,7 +101,7 @@ export async function listPublicContent(kind) {
     imageAlt: row.image_alt,
     createdAt: row.created_at,
     updatedAt: row.updated_at
-  }));
+  })), hasMore };
 }
 
 export async function listAdminContent(kind = '') {

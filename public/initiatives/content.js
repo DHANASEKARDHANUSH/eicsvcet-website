@@ -63,7 +63,9 @@
     if (!section) return;
 
     try {
-      const response = await fetch(`/api/public/content?kind=${encodeURIComponent(kind)}`, {
+      const fullList = section.hasAttribute('data-achievements-full');
+      const limit = kind === 'achievement' && !fullList ? '&limit=3' : '';
+      const response = await fetch(`/api/public/content?kind=${encodeURIComponent(kind)}${limit}`, {
         headers: { Accept: 'application/json' },
         credentials: 'same-origin'
       });
@@ -76,6 +78,16 @@
       if (!grid) return;
       grid.replaceChildren(...items.map(makeCard));
       section.hidden = false;
+      if (kind === 'achievement' && !fullList && data.hasMore) {
+        const more = document.createElement('a');
+        more.className = 'button button-primary';
+        more.href = '/initiatives/achievements/';
+        more.textContent = 'See More';
+        const action = document.createElement('div');
+        action.className = 'managed-public-more';
+        action.appendChild(more);
+        grid.insertAdjacentElement('afterend', action);
+      }
     } catch {
       // Existing static page remains usable if dynamic content is unavailable.
     }

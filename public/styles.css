@@ -116,6 +116,7 @@ textarea { min-height: 120px; resize: vertical; }
 .managed-public-kicker { margin-bottom: 10px; color: var(--green); font-size: .76rem; font-weight: 900; text-transform: uppercase; }
 .managed-public-meta { color: var(--muted); font-weight: 750; }
 .managed-public-body > :last-child { margin-bottom: 0; }
+.managed-public-more { display: flex; justify-content: center; margin-top: 28px; }
 
 .site-footer { margin-top: 70px; border-top: 1px solid var(--line); padding: 35px 0 50px; }
 .footer-grid { display: grid; grid-template-columns: 1.3fr .7fr .7fr; gap: 28px; }

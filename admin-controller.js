@@ -260,8 +260,13 @@ export function createAdminController() {
         const kind = requestUrl.searchParams.get('kind');
         if (!['event', 'program', 'achievement'].includes(kind)) return json(res, 400, { message: 'Invalid content type.' });
         try {
-          const items = await listPublicContent(kind);
-          return json(res, 200, { items }, { 'Cache-Control': 'public, max-age=60, stale-while-revalidate=300' });
+          const rawLimit = requestUrl.searchParams.get('limit');
+          const limit = rawLimit === null ? null : Number(rawLimit);
+          if (rawLimit !== null && (!Number.isInteger(limit) || limit < 1 || limit > 100)) {
+            return json(res, 400, { message: 'Invalid content limit.' });
+          }
+          const result = await listPublicContent(kind, limit);
+          return json(res, 200, result, { 'Cache-Control': 'public, max-age=60, stale-while-revalidate=300' });
         } catch (error) {
           console.error('Public content read failed:', error);
           return json(res, 500, { message: 'Could not load content.' });

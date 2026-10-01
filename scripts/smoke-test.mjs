@@ -28,6 +28,7 @@ try {
     ['admin', await fetch('http://127.0.0.1:3187/admin/')],
     ['about', await fetch('http://127.0.0.1:3187/about/')],
     ['initiatives', await fetch('http://127.0.0.1:3187/initiatives/')],
+    ['achievements', await fetch('http://127.0.0.1:3187/initiatives/achievements/')],
     ['membership', await fetch('http://127.0.0.1:3187/membership/')],
     ['contact', await fetch('http://127.0.0.1:3187/contact/')],
     ['404', await fetch('http://127.0.0.1:3187/not-a-page')],
